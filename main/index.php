@@ -1,3 +1,33 @@
+<?php
+	session_start();
+	include "php/connection.php";
+?>
+
+
+<?php
+                  $query = mysqli_query($conn, "SELECT longitude,latitude From datarelawan") or die(mysqli_error());
+                      if (mysqli_num_rows($query) == 0) {
+                        echo "<tr align='center'><td colspan='6'>Tidak ada data !</td></tr>";
+                      } else {
+
+                        $geojson = array( 'type' => 'FeatureCollection', 'features' => array());
+
+                        while ($row = mysqli_fetch_assoc($query)) {
+                              $marker = array(
+                              'type' => 'Feature',
+                              'geometry' => array(
+                                'type' => 'Point',
+                                'coordinates' => array(
+                                  $row['longitude'],
+                                  $row['latitude'] 
+                                )
+                              )
+                            );
+                            array_push($geojson['features'], $marker);
+                                                  }
+                      }
+                      
+                      ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,6 +49,7 @@
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
   <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+  <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
   <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
 
 </head>
@@ -32,7 +63,7 @@
     <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         <div class="sidebar-brand-icon rotate">
           <i class="fas fa-grin"></i>
         </div>
@@ -44,7 +75,7 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index.php">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Geolokasi</span></a>
       </li>
@@ -60,10 +91,11 @@
         <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">daftar user</h6>
-            <a class="collapse-item" href="table-kacam.html">Kepala Kecamatan</a>
-            <a class="collapse-item" href="table-kalur.html">Kepala Kelurahan</a>
-            <a class="collapse-item" href="table-kaling.html">Kepala Lingkungan</a>
-            <a class="collapse-item" href="table-vol.html">Volunteer</a>
+            <a class="collapse-item" href="katimsukses.php">Kepala Tim Sukses</a>
+            <a class="collapse-item" href="table-kacam.php">Kepala Kecamatan</a>
+            <a class="collapse-item" href="table-kalur.php">Kepala Kelurahan</a>
+            <a class="collapse-item" href="table-kaling.php">Kepala Lingkungan</a>
+            <a class="collapse-item" href="table-vol.php">Volunteer</a>
           </div>
         </div>
       </li>
@@ -163,7 +195,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo 	$_SESSION['username']; ?></span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
               </a>
               <!-- Dropdown - User Information -->
@@ -211,6 +243,7 @@
                               </div>
                             </div>
                           </div>
+                            
                           <div class="col-xl-3 col-lg-5">
                             <div class="card shadow mb-4">
                               <!-- Card Header - Dropdown -->
@@ -238,6 +271,7 @@
                                 <hr>
                               </div>
                             </div>
+
                           </div>
                         </div>
                           </div>
@@ -250,7 +284,11 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Geolocation 2020</span>
+            <span>Copyright &copy; Geolocation 2020  <?php echo json_encode($geojson,JSON_NUMERIC_CHECK); ?>
+
+
+
+</span>
           </div>
         </div>
       </footer>
@@ -280,11 +318,13 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="php/logout.php">Logout</a>
         </div>
       </div>
     </div>
   </div>
+
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -307,91 +347,30 @@
         center: [ 98.664040,3.5846293], // starting position [lng, lat]
         zoom: 11 // starting zoom
         });
-
-                    map.on('load', function() {
-                  map.addSource('national-park', {
-                  'type': 'geojson',
-                  'data': {
-                  'type': 'FeatureCollection',
-                  'features': [
-                  {
-                  'type': 'Feature',
-                  'geometry': {
-                  'type': 'Polygon',
-                  'coordinates': [
-                  [
-                  [98.72683,3.80100],
-                  [98.6961,3.73482],
-                  [98.71644,3.69704],
-                  [98.69558,3.65926],
-                  [98.72288,3.64375],
-                  [98.72614,3.61728],
-                  [98.73078,3.56356],
-                  [98.74163,3.54533],
-                  [98.74151,3.52848],
-                  [98.66984,3.52423],
-                  [98.59921,3.48972],
-                  [98.5976,3.54054],
-                  [98.58483,3.59623],
-                  [98.59679,3.63958],
-                  [98.63924,3.71668],
-                  [98.66907,3.74821],
-                  [98.66708,3.76834],
-                  [98.68071,3.7871],
-                  [98.68702,3.78872],
-                  [98.70269,3.80123]
-                  ]
-                  ]
-                  }
-                  },
-                  {
-                  'type': 'Feature',
-                  'geometry': {
-                  'type': 'Point',
-                  'coordinates': [-121.415061, 40.506229]
-                  }
-                  },
-                  {
-                  'type': 'Feature',
-                  'geometry': {
-                  'type': 'Point',
-                  'coordinates': [-121.505184, 40.488084]
-                  }
-                  },
-                  {
-                  'type': 'Feature',
-                  'geometry': {
-                  'type': 'Point',
-                  'coordinates': [-121.354465, 40.488737]
-                  }
-                  }
-                  ]
-                  }
-                  });
-                  
-                  map.addLayer({
-                  'id': 'park-boundary',
-                  'type': 'fill',
-                  'source': 'national-park',
-                  'paint': {
-                  'fill-color': '#888888',
-                  'fill-opacity': 0.4
-                  },
-                  'filter': ['==', '$type', 'Polygon']
-                  });
-                  
-                  map.addLayer({
-                  'id': 'park-volcanoes',
-                  'type': 'circle',
-                  'source': 'national-park',
-                  'paint': {
-                  'circle-radius': 6,
-                  'circle-color': '#B42222'
-                  },
-                  'filter': ['==', '$type', 'Point']
-                  });
-                });
     </script>
+    <script>
+    var geoJson = <?php echo json_encode($geojson,JSON_NUMERIC_CHECK); ?>;
+            map.on('load', function() {
+                            map.addSource('relawan', {
+                            'type': 'geojson',
+                            'data': geoJson
+                            });
+                            
+                            map.addLayer({
+                            'id': 'peta-relawan',
+                            'type': 'circle',
+                            'source': 'relawan',
+                            'paint': {
+                            'circle-radius': 6,
+                            'circle-color': '#B42222'
+                            },
+                            'filter': ['==', '$type', 'Point']
+                            });
+                          });
+
+
+    </script>
+
 
 </body>
 
