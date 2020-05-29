@@ -237,6 +237,12 @@
                         <input type="text" class="form-control" id="nohp" placeholder="No Telepon" value="<?php echo $data['no'];?>" name="no">
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Wilayah</label>
+                        <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputPassword" placeholder="Wilayah" value="<?php echo $data['wilayah'];?>" name="wilayah">
+                        </div>
+                    </div>
                     <hr>
                     <button type="submit" class="btn btn-danger btn-user btn-block" style="width:200px; margin-left:auto;" name="simpankaling">
                       Ubah

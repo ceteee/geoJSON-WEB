@@ -218,7 +218,7 @@
                       <th>Nama</th>
                       <th>Foto</th>
                       <th>No HP</th>
-
+                      <th>wilayah</th>
                       <th>Nama katimlur penginput</th>
                       <th style="text-align:center;">Opsi</th>
 
@@ -229,7 +229,7 @@
                       <th>Nama</th>
                       <th>Foto</th>
                       <th>No HP</th>
-
+                      <th>wilayah</th>
                       <th>Nama katimlur penginput</th>
                       <th style="text-align:center;">Opsi</th>
                     </tr>
@@ -245,7 +245,9 @@
                               "<td>".$data['nama']."</td>".
                               "<td style='text-align: center;' ><img src='data:image/jpeg;base64,".base64_encode($data['foto'])."' alt='ketua tim sukses' style='width: 100px; height: 140px; margin-left: auto; margin-right: auto; border:solid 1px;'/></td>". 
                               "<td>".$data['no']."</td>".
+                              "<td>".$data['wilayah']."</td>".
                               "<td>".$data['namap']."</td>".
+                              
                               "<td style='text-align:center;'> <a class='btn btn-info' href='edit-kaling.php?id=".$data['idling']."' >ubah</a> | <a class='btn btn-danger' href='php/delete.php?idling=".$data['idling']."'>hapus</a></td>";
                         }
                       }

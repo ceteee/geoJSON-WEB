@@ -3,22 +3,42 @@
         include('connection.php');
         $id=$_POST['idcam'];
 		$nama=$_POST['nama'];
-		$ktp=$_POST['ktp'];
-        $hp=$_POST['hp'];
+        $hp=$_POST['no'];
         $wilayah=$_POST['wilayah'];
-        $update=mysqli_query($conn,"UPDATE katimcam set nama='$nama',hp='$hp',ktp='$ktp',wilayah='$wilayah' WHERE idcam='$id'") or die(mysql_error());
-        if($update){
-            echo '<script language="javascript">alert("Data Katimcam berhasil diubah!");document.location="../table-kacam.php"</script>';
+        $file_name = $_FILES['foto']['name'];
+        $file_size = $_FILES['foto']['size'];
+        $file_type = $_FILES['foto']['type'];
+
+        if($file_size== ""){
+
+            $update=mysqli_query($conn,"UPDATE katimcam set nama='$nama', no='$hp',wilayah='$wilayah' WHERE idcam='$id'") or die(mysql_error());
+            if($update){
+                echo '<script language="javascript">alert("Data Katimcam berhasil diubah!");document.location="../table-kacam.php"</script>';
+            }
+            else{
+                echo '<script language="javascript">alert("Gagal mengubah data katimcam!");document.location="../edit-kacam.php?id='.$id.'"</script>';
+            }
+
         }
         else{
-            echo '<script language="javascript">alert("Gagal mengubah data katimcam!");document.location="../edit-kacam.php?id='.$id.'"</script>';
+            if($file_size < 5242880 and ($file_type =='image/jpeg' or $file_type == 'image/png')){
+                $image   = addslashes(file_get_contents($_FILES['foto']['tmp_name']));
+            
+                $update=mysqli_query($conn,"UPDATE katimcam set nama='$nama', foto='$image',no='$hp',wilayah='$wilayah' WHERE idcam='$id'") or die(mysql_error());
+                if($update){
+                    echo '<script language="javascript">alert("Data Katimcam berhasil diubah!");document.location="../table-kacam.php"</script>';
+                }}
+                else{
+                    echo '<script language="javascript">alert("Gagal mengubah data katimcam!");document.location="../edit-kacam .php?id='.$id.'"</script>';
+                }
+
+
+            }
         }
-    }
-	
-	if(isset($_POST['gagal'])){
-		echo '<script language="javascript">alert("Batal Mengubah data!");document.location="../datamotor.php"</script>';
-    }
     
+
+
+
 
     if(isset($_POST['simpankalur'])){
         include('connection.php');
@@ -67,13 +87,14 @@
         $id=$_POST['idling'];
 		$nama=$_POST['nama'];
         $hp=$_POST['no'];
+        $wilayah=$_POST['wilayah'];
         $file_name = $_FILES['foto']['name'];
         $file_size = $_FILES['foto']['size'];
         $file_type = $_FILES['foto']['type'];
 
         if($file_size== ""){
 
-            $update=mysqli_query($conn,"UPDATE kaling set nama='$nama', no='$hp' WHERE idling='$id'") or die(mysql_error());
+            $update=mysqli_query($conn,"UPDATE kaling set nama='$nama', no='$hp',wilayah='$wilayah' WHERE idling='$id'") or die(mysql_error());
             if($update){
                 echo '<script language="javascript">alert("Data Kaling berhasil diubah!");document.location="../table-kaling.php"</script>';
             }
@@ -86,7 +107,7 @@
             if($file_size < 5242880 and ($file_type =='image/jpeg' or $file_type == 'image/png')){
                 $image   = addslashes(file_get_contents($_FILES['foto']['tmp_name']));
             
-                $update=mysqli_query($conn,"UPDATE kaling set nama='$nama', foto='$image',no='$hp' WHERE idling='$id'") or die(mysql_error());
+                $update=mysqli_query($conn,"UPDATE kaling set nama='$nama', foto='$image',no='$hp',wilayah='$wilayah' WHERE idling='$id'") or die(mysql_error());
                 if($update){
                     echo '<script language="javascript">alert("Data Kaling berhasil diubah!");document.location="../table-kaling.php"</script>';
                 }}

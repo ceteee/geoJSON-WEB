@@ -211,8 +211,9 @@
                   <thead>
                     <tr>
                       <th>Nama</th>
-                      <th>No KTP</th>
+                      <th>Foto</th>
                       <th>No HP</th>
+
                       <th>Wilayah</th>
                       <th style="text-align:center;">Opsi</th>
 
@@ -221,8 +222,9 @@
                   <tfoot>
                     <tr>
                       <th>Nama</th>
-                      <th>No KTP</th>
+                      <th>Foto</th>
                       <th>No HP</th>
+
                       <th>Wilayah</th>
                       <th style="text-align:center;">Opsi</th>
                     </tr>
@@ -236,8 +238,9 @@
                         while ($data = mysqli_fetch_assoc($query)) {
                           echo 	"<tr>".
                               "<td>".$data['nama']."</td>".
-                              "<td>".$data['ktp']."</td>".
-                              "<td>".$data['hp']."</td>".
+                              "<td style='text-align: center;' ><img src='data:image/jpeg;base64,".base64_encode($data['foto'])."' alt='ketua tim sukses' style='width: 100px; height: 140px; margin-left: auto; margin-right: auto; border:solid 1px;'/></td>". 
+                              "<td>".$data['no']."</td>".
+                              
                               "<td>".$data['wilayah']."</td>".
                               "<td style='text-align:center;'> <a class='btn btn-info' href='edit-kacam.php?id=".$data['idcam']."' >ubah</a> | <a class='btn btn-danger' href='php/delete.php?idcam=".$data['idcam']."'>hapus</a></td>";
                         }

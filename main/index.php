@@ -256,11 +256,15 @@
                                 <div class="row-mb-12">
                                   <p class="font-weight-light">Jumlah Pendukung </p>
                                 </div>
-
-                                <div class="row-mb-12">
-                                  <h5 class="font-weight-bold">1.000.021</h5>
-                                </div>
-                                <hr>
+                                      <?php
+                                            $sql = "SELECT * FROM datarelawan";
+                                            $result = $conn->query($sql);
+                                            $rows = mysqli_num_rows($result);
+                                echo '<div class="row-mb-12">';
+                                  echo "<h5 class='font-weight-bold'> $rows </h5>";
+                                echo '</div>';
+                                ?>
+                              <hr>
                                 <div class="row-mb-12">
                                   <p class="font-weight-light">Jumlah Penduduk </p>
                                 </div>
@@ -284,7 +288,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Geolocation 2020  <?php echo json_encode($geojson,JSON_NUMERIC_CHECK); ?>
+            <span>Copyright &copy; Geolocation 2020
 
 
 

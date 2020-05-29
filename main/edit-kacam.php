@@ -213,7 +213,7 @@
 						?>
 
         <div class="card-body">
-                <form class="user" action="php/edit.php" method="post">
+                <form class="user" action="php/edit.php" method="post" enctype="multipart/form-data">
                 <div class="form-group row">
                         <input type="hidden" name="idcam" value="<?php echo $id;?>">
                         <label for="staticEmail" class="col-sm-2 col-form-label">Nama</label>
@@ -222,15 +222,19 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputPassword" class="col-sm-2 col-form-label">No KTP</label>
+                        <label for="image" class="col-sm-2 col-form-label">Foto</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputPassword" placeholder="No Kartu Tanda Penduduk" value="<?php echo $data['ktp'];?>" name="ktp">
+                        <?php echo "<img src='data:image/jpeg;base64,".base64_encode($data['foto'])."' alt='ketua tim sukses' style='width: 100px; height: 140px; margin-left: auto; margin-right: auto; border:solid 1px;'/>"
+                        ?><br>
+                        <br>
+                          <input type="file" id="img" name="foto" >
+                        
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inputPassword" class="col-sm-2 col-form-label">No HP</label>
                         <div class="col-sm-10">
-                        <input type="text" class="form-control" id="inputPassword" placeholder="No Telepon" value="<?php echo $data['hp'];?>" name="hp">
+                        <input type="text" class="form-control" id="inputPassword" placeholder="No Telepon" value="<?php echo $data['no'];?>" name="no">
                         </div>
                     </div>
                     <div class="form-group row">
