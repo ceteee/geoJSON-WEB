@@ -240,7 +240,7 @@
                   </tfoot>
                   <tbody>
                     <?php
-                  $query = mysqli_query($conn, "SELECT *,(select nama from kaling where idling=datarelawan.idling) as 'namap' From datarelawan order by nama ASC") or die(mysqli_error());
+                  $query = mysqli_query($conn, "SELECT *,(select nama from kaling where nama=datarelawan.namaling) as 'namap' From datarelawan order by nama ASC") or die(mysqli_error());
                       if (mysqli_num_rows($query) == 0) {
                         echo "<tr align='center'><td colspan='6'>Tidak ada data !</td></tr>";
                       } else {

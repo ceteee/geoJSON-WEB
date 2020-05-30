@@ -236,7 +236,7 @@
                   </tfoot>
                   <tbody>
                     <?php
-                  $query = mysqli_query($conn, "SELECT *,(select nama from katimlur where idlur=kaling.idlur) as 'namap' From kaling order by nama ASC") or die(mysqli_error());
+                  $query = mysqli_query($conn, "SELECT *,(select nama from katimlur where nama=kaling.namalur) as 'namap' From kaling order by nama ASC") or die(mysqli_error());
                       if (mysqli_num_rows($query) == 0) {
                         echo "<tr align='center'><td colspan='6'>Tidak ada data !</td></tr>";
                       } else {
